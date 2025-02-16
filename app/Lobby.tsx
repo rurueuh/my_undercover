@@ -114,7 +114,7 @@ export default function LobbyScreen() {
           numColumns={3}
           contentContainerStyle={styles.listContainer}
         />
-        <Button title="Commencer la partie" onPress={() => router.push('/Game')} disabled={players.length < MIN_PLAYERS} color="#bb86fc" />
+        <Button title="Commencer la partie" onPress={() => router.push({pathname: "/Game", params: {players: JSON.stringify(players)}})} disabled={players.length < MIN_PLAYERS} color="#bb86fc" />
         <Button title="Ajouter un joueur" onPress={addPlayer} disabled={players.length >= MAX_PLAYERS} color="#bb86fc" />
         
         <Portal>

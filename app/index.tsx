@@ -7,7 +7,7 @@ export default function HomeScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Ruru Undercover</Text>
-      <Button title="Crée une partie" onPress={() => router.push('/Game')} />
+      <Button title="Crée une partie" onPress={() => router.push('/Lobby')} />
     </View>
   );
 }
