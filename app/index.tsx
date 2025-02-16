@@ -6,12 +6,8 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Accueil</Text>
-      <Button title="Aller à Explorer" onPress={() => router.push('/Game')} />
+      <Text>Ruru Undercover</Text>
+      <Button title="Crée une partie" onPress={() => router.push('/Game')} />
     </View>
   );
 }
-
-export const options = {
-  headerShown: false,
-};
