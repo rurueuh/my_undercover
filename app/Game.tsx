@@ -2,8 +2,11 @@ import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity, TextInput, 
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { Dialog, Portal, Provider } from 'react-native-paper';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function GameScreen() {
+  const router = useRouter();
   const [players, setPlayers] = useState<{ name: string, image: string | null }[]>([]);
   const [editingPlayerIndex, setEditingPlayerIndex] = useState<number | null>(null);
   const [newPlayerName, setNewPlayerName] = useState<string>('');
@@ -154,6 +157,9 @@ export default function GameScreen() {
             </View>
           </View>
         </Modal>
+        <TouchableOpacity style={styles.settingsButton} onPress={() => router.push('/Settings')}>
+          <Ionicons name="settings" size={32} color="white" />
+        </TouchableOpacity>
       </View>
     </Provider>
   );
@@ -230,5 +236,13 @@ const styles = StyleSheet.create({
   listContainer: {
     alignItems: 'center',
     paddingBottom: 20,
+  },
+  settingsButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#333',
+    padding: 10,
+    borderRadius: 30,
   },
 });
