@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 const MAX_PLAYERS = 20;
-const MIN_PLAYERS = 4;
+const MIN_PLAYERS = 3;
 
 export default function LobbyScreen() {
   const router = useRouter();
@@ -98,6 +98,9 @@ export default function LobbyScreen() {
     setImageDialogVisible(false);
   };
 
+  function navigateToGame() {
+    return router.push({ pathname: "/Game", params: { players: JSON.stringify(players) } });
+  }
   return (
     <Provider>
       <View style={styles.container}>
@@ -114,7 +117,7 @@ export default function LobbyScreen() {
           numColumns={3}
           contentContainerStyle={styles.listContainer}
         />
-        <Button title="Commencer la partie" onPress={() => router.push({pathname: "/Game", params: {players: JSON.stringify(players)}})} disabled={players.length < MIN_PLAYERS} color="#bb86fc" />
+        <Button title="Commencer la partie" onPress={navigateToGame} disabled={players.length < MIN_PLAYERS} color="#bb86fc" />
         <Button title="Ajouter un joueur" onPress={addPlayer} disabled={players.length >= MAX_PLAYERS} color="#bb86fc" />
         
         <Portal>

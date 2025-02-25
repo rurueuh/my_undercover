@@ -7,6 +7,10 @@ import { getWord, generateCard } from './card';
 
 interface Player {
     name: string;
+    image: string | null;
+    turn: number;
+    isMisterWhite: boolean;
+    card: Card | null;
 }
 
 interface Card {
@@ -15,15 +19,27 @@ interface Card {
     player: string | null;
 }
 
+function generatePlayersTurn(players: Player[]) {
+    do {
+        players = players.sort(() => Math.random() - 0.5);
+        players.forEach((player, index) => {
+            player.turn = index + 1;
+        });
+    } while (players[0].card?.word === "Mister White");
+    return players;
+}
+
 export default function GameScreen() {
     const router = useRouter();
     const params = useLocalSearchParams();
-    const [players, setPlayers] = useState<Player[]>([]);
+    let [players, setPlayers] = useState<Player[]>([]);
     const [cards, setCards] = useState<Card[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0);
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+
+    const [startGame, setStartGame] = useState<boolean>(false);
 
     const NB_BAD_WORDS = 1;
     const { goodWord, badWord } = getWord();
@@ -38,10 +54,11 @@ export default function GameScreen() {
     }, [params.players]);
 
     const handleSelectCard = (index: number) => {
-        if (cards[index].player) return; // Empêche de choisir une carte déjà attribuée
+        if (cards[index].player) return;
 
         const updatedCards = [...cards];
         updatedCards[index].player = players[currentPlayerIndex].name;
+        players[currentPlayerIndex].card = updatedCards[index];
         setCards(updatedCards);
         setSelectedCard(updatedCards[index]);
         setModalVisible(true);
@@ -53,6 +70,8 @@ export default function GameScreen() {
         if (currentPlayerIndex < players.length - 1) {
             setCurrentPlayerIndex(currentPlayerIndex + 1);
         } else {
+            players = generatePlayersTurn(players);
+            setStartGame(true);
             console.log("Tous les joueurs ont leur carte, début du jeu !");
         }
     };
@@ -62,6 +81,28 @@ export default function GameScreen() {
             <SafeAreaProvider>
                 <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text>Loading...</Text>
+                </SafeAreaView>
+            </SafeAreaProvider>
+        );
+    }
+
+    if (startGame) {
+        return (
+            <SafeAreaProvider>
+                <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.title}>Le jeu commence !</Text>
+                    <Text style={styles.title}>ordre de passage : </Text>
+                    {players.map((player, _) => (
+                        <Text key={player.name} style={styles.title}>
+                            {player.turn} - {player.name}
+                        </Text>
+                    ))}
+                    <Button
+                        title="Commencer le jeu"
+                        onPress={() => {
+                            router.push({ pathname: "/GameTurn", params: { players: JSON.stringify(players) } });
+                        }}
+                    />
                 </SafeAreaView>
             </SafeAreaProvider>
         );
@@ -92,7 +133,10 @@ export default function GameScreen() {
                     >
                         <View style={styles.modalContainer}>
                             <View style={styles.modalContent}>
-                                <Text style={styles.modalText}>Ton mot : {selectedCard?.word}</Text>
+                                {/* if card is mister white say "Tu es le mister white" else "Tu as le mot : {word}" */}
+                                <Text style={styles.modalText}>
+                                    {selectedCard?.word === "Mister White" ? "Tu es le Mister White" : `Tu as le mot : ${selectedCard?.word}`}
+                                </Text>
                                 <Button title="OK" onPress={handleCloseModal} />
                             </View>
                         </View>
