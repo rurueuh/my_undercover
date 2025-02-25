@@ -4,6 +4,7 @@ import { View, Text, Button, StyleSheet, Modal, TouchableOpacity } from 'react-n
 import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { getWord, generateCard } from './card';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Player {
     name: string;
@@ -41,16 +42,20 @@ export default function GameScreen() {
 
     const [startGame, setStartGame] = useState<boolean>(false);
 
-    const NB_BAD_WORDS = 1;
-    const { goodWord, badWord } = getWord();
-
+    
     useEffect(() => {
-        if (params.players) {
-            let playersData: Player[] = JSON.parse(params.players as string);
-            setPlayers(playersData);
-            setCards(generateCard({ goodWord, badWord, nbBadWords: NB_BAD_WORDS, nbPlayers: playersData.length }));
-            setLoading(false);
-        }
+        const fetchBadWords = async () => {
+            const badWords = await AsyncStorage.getItem('badWordsCount') ?? '2';
+            const nbBadWords = parseInt(badWords);
+            const { goodWord, badWord } = getWord();
+            if (params.players) {
+                let playersData: Player[] = JSON.parse(params.players as string);
+                setPlayers(playersData);
+                setCards(generateCard({ goodWord, badWord, nbBadWords, nbPlayers: playersData.length }));
+                setLoading(false);
+            }
+        };
+        fetchBadWords();
     }, [params.players]);
 
     const handleSelectCard = (index: number) => {
@@ -72,7 +77,6 @@ export default function GameScreen() {
         } else {
             players = generatePlayersTurn(players);
             setStartGame(true);
-            console.log("Tous les joueurs ont leur carte, début du jeu !");
         }
     };
 

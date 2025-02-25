@@ -7,17 +7,11 @@ import {
     FlatList,
     Image,
 } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 
-import * as FileSystem from 'expo-file-system';
-
-const checkImage = async (uri: string) => {
-  const fileInfo = await FileSystem.getInfoAsync(uri);
-  console.log(`File exists: ${fileInfo.exists}`);
-};
-
-
+import { Button } from 'react-native-paper';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 interface Card {
     word: string;
@@ -34,6 +28,7 @@ interface Player {
 }
 
 export default function GameTurnScreen() {
+    const router = useRouter();
     const params = useLocalSearchParams();
     const [loading, setLoading] = useState<boolean>(true);
     const [players, setPlayers] = useState<Player[]>([]);
@@ -49,9 +44,6 @@ export default function GameTurnScreen() {
     }, [params.players]);
 
     const handlePlayerPress = (player: Player) => {
-        console.log(player.image);
-        checkImage(player.image as string);
-
         if (player.card?.word) {
             setSelectedCardWord(player.card.word);
         } else {
@@ -70,46 +62,54 @@ export default function GameTurnScreen() {
         );
     } else {
         return (
-            <View style={styles.listContainer}>
-                <FlatList
-                    data={players}
-                    keyExtractor={(item) => item.name}
-                    numColumns={3}
-                    contentContainerStyle={styles.flatListContainer}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            onPress={() => handlePlayerPress(item)}
-                            style={styles.playerCard}
-                        >
-                            {item.image && (
-                                <Image
-                                    source={{ uri: item.image }}
-                                    style={styles.playerImage}
-                                    resizeMode="cover"
-                                />
+            <SafeAreaProvider>
+                <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={styles.listContainer}>
+                        <Text style={styles.title}>Séléctionner le joueur a éliminer</Text>
+                        <FlatList
+                            data={players}
+                            keyExtractor={(item) => item.name}
+                            numColumns={3}
+                            contentContainerStyle={styles.flatListContainer}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity
+                                    onPress={() => handlePlayerPress(item)}
+                                    style={styles.playerCard}
+                                >
+                                    {item.image && (
+                                        <Image
+                                            source={{ uri: item.image }}
+                                            style={styles.playerImage}
+                                            resizeMode="cover"
+                                        />
+                                    )}
+                                    <Text style={styles.playerName}>{item.name}</Text>
+                                    <Text style={styles.cardText}>{item.turn}</Text>
+                                </TouchableOpacity>
                             )}
-                            <Text style={styles.playerName}>{item.name}</Text>
-                            <Text style={styles.cardText}>{item.turn}</Text>
-                        </TouchableOpacity>
-                    )}
-                />
+                        />
+                        <Button mode="contained" onPress={() => { router.dismissAll(); router.push('Lobby'); }}>
+                            Fin de la partie
+                        </Button>
 
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalContent}>
-                            <Text style={styles.modalText}>{selectedCardWord}</Text>
-                            <TouchableOpacity onPress={() => setModalVisible(false)}>
-                                <Text style={styles.closeText}>Close</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => setModalVisible(false)}
+                        >
+                            <View style={styles.modalContainer}>
+                                <View style={styles.modalContent}>
+                                    <Text style={styles.modalText}>{selectedCardWord}</Text>
+                                    <TouchableOpacity onPress={() => setModalVisible(false)}>
+                                        <Text style={styles.closeText}>Close</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </Modal>
                     </View>
-                </Modal>
-            </View>
+                </SafeAreaView>
+            </SafeAreaProvider >
         );
     }
 }
