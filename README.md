@@ -1,50 +1,54 @@
-# Welcome to your Expo app 👋
+# Ruru Undercover - Application Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 📌 Présentation
+Ruru Undercover est une application mobile développée en **React Native avec Expo**. Elle permet aux utilisateurs de créer un **lobby de joueurs**, d'ajouter/modifier des joueurs avec une **photo et un nom**, puis de démarrer une partie [d'undercover](https://www.yanstarstudio.com/fr/undercover-how-to-play)
 
-## Get started
+## 🛠️ Technologies Utilisées
+- **React Native** (Framework mobile)
+- **Expo** (Facilite le développement et le déploiement)
+- **TypeScript** (Typage robuste du code)
+- **react-native-gesture-handler** (Gestion des gestes et interactions)
+- **react-native-paper** (Composants UI)
+- **react-native-safe-area-context** (Gestion des marges sécurisées)
+- **AsyncStorage** (Stockage local des paramètres utilisateur)
 
-1. Install dependencies
+## 🎮 Fonctionnalités
+### ✅ **Lobby**
+- Ajouter jusqu'à **20 joueurs**.
+- Modifier le **nom** d'un joueur.
+- Ajouter une **photo** (depuis la galerie ou en prenant une photo).
+- Supprimer un joueur.
+- Lancer une partie si **au moins 4 joueurs** sont présents.
+- Transfert des joueurs vers l'écran **Game**.
 
-   ```bash
-   npm install
-   ```
+### ✅ **Game**
+- Récupération des joueurs du **Lobby**.
+- Affichage en **grille de 3 joueurs par ligne**.
+- les joueurs peuvent choisir leurs cartes et ensuite donne un ordre de passage et peux révéler les roles en appuyant sur le joueurs
 
-2. Start the app
+### ✅ **Settings**
+- **Activer/désactiver les notifications** (pas de notification pour le moment).
+- **Définir le nombre de joueurs Undercover**
+- Sauvegarde automatique avec **AsyncStorage**.
 
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+## 🚀 Installation et Lancement
+### 1️⃣ **Cloner le projet**
+```sh
+git clone https://github.com/rurueuh/my_undercover/
+cd my_undercover
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2️⃣ **Installer les dépendances**
+```sh
+npm install
+```
 
-## Learn more
+### 3️⃣ **Lancer le projet avec Expo**
+```sh
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 📷 Gestion des Images
+- Les utilisateurs peuvent **ajouter une photo** à chaque joueur.
+- Les images sont récupérées depuis la **galerie** ou en utilisant **l'appareil photo**.
+- Les images sont **affichées sous le nom du joueur**.
