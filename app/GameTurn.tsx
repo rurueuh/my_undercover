@@ -45,7 +45,13 @@ export default function GameTurnScreen() {
 
     const handlePlayerPress = (player: Player) => {
         if (player.card?.word) {
-            setSelectedCardWord(player.card.word);
+            if (player.card.word === 'Mister White') {
+                setSelectedCardWord('Mister White card');
+            } else if (player.card.isBad) {
+                setSelectedCardWord('Bad card: ' + player.card.word);
+            } else {
+                setSelectedCardWord('Good card: ' + player.card.word);
+            }
         } else {
             setSelectedCardWord('No card');
         }

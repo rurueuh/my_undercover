@@ -48,7 +48,12 @@ npm install
 npx expo start
 ```
 
+### **Pour installer simplement l'application l'apk est disponible**
+
 ## 📷 Gestion des Images
 - Les utilisateurs peuvent **ajouter une photo** à chaque joueur.
 - Les images sont récupérées depuis la **galerie** ou en utilisant **l'appareil photo**.
 - Les images sont **affichées sous le nom du joueur**.
+
+
+## 📷 Quelques Images du jeu
