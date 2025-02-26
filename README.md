@@ -51,9 +51,23 @@ npx expo start
 ### **Pour installer simplement l'application l'apk est disponible**
 
 ## 📷 Gestion des Images
+
+
 - Les utilisateurs peuvent **ajouter une photo** à chaque joueur.
 - Les images sont récupérées depuis la **galerie** ou en utilisant **l'appareil photo**.
 - Les images sont **affichées sous le nom du joueur**.
 
 
 ## 📷 Quelques Images du jeu
+|      |  |       |  |
+| ---      | ---       | ---       | ---       |
+| ![image](https://github.com/user-attachments/assets/114b4613-6e87-408d-9d55-6198386ee43e) | ![image](https://github.com/user-attachments/assets/9fcd0cd2-4d5f-4eee-bf0f-dc1e91dd13fb) |![image](https://github.com/user-attachments/assets/c0f2a46b-b118-408d-b5ee-6b62ab7d9920) | ![image](https://github.com/user-attachments/assets/45b4d00f-7945-4abe-bf52-8ec1f21840c5) |
+| ![image](https://github.com/user-attachments/assets/b9597458-c466-45d2-b289-76ccd811b0da)     | ![image](https://github.com/user-attachments/assets/02f7a916-0261-4c59-9bf9-a77d36f4f420)  | ![image](https://github.com/user-attachments/assets/3577d934-d756-4881-aa14-bf3861657e33) | ![image](https://github.com/user-attachments/assets/00709ab5-55a9-4b57-a3d2-d80fdec1eafa)  |
+
+
+
+
+
+
+
+
